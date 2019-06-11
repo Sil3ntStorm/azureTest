@@ -40,6 +40,19 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
     var widget = gui.currentPageWidget();
     widget.deselectAll();    
     widget.selectComponent("qt.qt5.5123.win64_msvc2017_64");
+    widget.deselectComponent("qt.qt5.5123.doc");
+    widget.deselectComponent("qt.qt5.5123.examples");
+    widget.deselectComponent("qt.qt5.5123.qtcharts");
+    widget.deselectComponent("qt.qt5.5123.qtdatavis3d");
+    widget.deselectComponent("qt.qt5.5123.qtpurchasing");
+    widget.deselectComponent("qt.qt5.5123.qtvirtualkeyboard");
+    widget.deselectComponent("qt.qt5.5123.qtwebglplugin");
+    widget.deselectComponent("qt.tools.qtcreator");
+    widget.deselectComponent("qt.tools.qtcreatorcdbext");
+    widget.deselectComponent("qt.tools.win32_mingw730");
+    widget.deselectComponent("qt.tools.win64_mingw730");
+    widget.deselectComponent("qt.tools.perl");
+	widget.deselectComponent("qt.tools.vcredist_msvc2015_x86");
     gui.clickButton(buttons.NextButton);
 }
 
@@ -54,7 +67,7 @@ Controller.prototype.StartMenuDirectoryPageCallback = function() {
 
 Controller.prototype.ReadyForInstallationPageCallback = function()
 {
-    gui.clickButton(buttons.NextButton);
+    gui.clickButton(buttons.NextButton, 500);
 }
 
 Controller.prototype.FinishedPageCallback = function() {
