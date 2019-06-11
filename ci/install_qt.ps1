@@ -4,6 +4,7 @@ Write-Output 'Downloaded QT Installer'
 $Env:QT_INSTALL_DIR = Join-Path (Get-Location) "Qt";
 Start-Process qt.exe -ArgumentList '--verbose --script ci/qt-install.txt' -NoNewWindow -Wait
 Write-Output 'Installed QT Installer'
+Get-ChildItem -Path Qt
 Remove-Item qt.exe -Force
 Remove-Item Qt\MaintenanceTool.exe -Force
-Get-ChildItem -Path Qt\5.12.3
+Get-ChildItem -Path Qt\5.12.3\msvc2017_64
