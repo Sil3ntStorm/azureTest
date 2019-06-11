@@ -6,4 +6,4 @@ Start-Process qt.exe -ArgumentList '--verbose --script ci/qt-install.txt' -NoNew
 Write-Output 'Installed QT Installer'
 Remove-Item qt.exe -Force
 Remove-Item Qt\MaintenanceTool.exe -Force
-Get-ChildItem -Path Qt
+Get-ChildItem -Path Qt\5.12.3
