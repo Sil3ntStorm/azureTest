@@ -52,12 +52,12 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>.\Qt\5.12.3\msvc2017_64\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QT_INSTALL_DIR)\5.12.3\msvc2017_64\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>QT_NO_UNICODE_LITERAL;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>.\Qt\5.12.3\msvc2017_64\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(QT_INSTALL_DIR)\5.12.3\msvc2017_64\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
