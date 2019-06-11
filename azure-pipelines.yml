@@ -15,10 +15,10 @@ variables:
   buildConfiguration: 'debug'
 
 steps:
-- task: PowerShell@1
+- task: PowerShell@2
   inputs:
     filePath: 'ci/install_qt.ps1'
-- task: VSBuild@2
+- task: VSBuild@1
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
