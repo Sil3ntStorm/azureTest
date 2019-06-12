@@ -1,6 +1,6 @@
 #include <iostream>
 #include <QtCore/QString>
-#pragma lib("Qt5Core")
+#pragma comment(lib, "Qt5Core")
 
 int main(int argc, char** argv) {
 	QString text = "Your %1 command line arguments are:\n";
