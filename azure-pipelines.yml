@@ -32,4 +32,5 @@ steps:
     configuration: '$(buildConfiguration)'
 - task: PublishPipelineArtifact@0
   inputs:
-    artifactName: '$(Build.DefinitionName)-$(Build.SourceVersion)'
+    artifactName: '$(buildConfiguration)-$(buildPlatform)'
+    targetPath: '$(buildPlatform)/$(buildConfiguration)'
