@@ -17,7 +17,13 @@ variables:
 steps:
 - task: PowerShell@2
   inputs:
-    filePath: 'ci/install_qt.ps1'
+    filePath: 'ci/download_qt.ps1'
+  env:
+    QT_SOURCE_URL: $(qtSource)
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: 'qt.zip'
+    destinationFolder: 'Qt'
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
