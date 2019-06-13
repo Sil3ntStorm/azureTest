@@ -13,13 +13,14 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'x64'
   buildConfiguration: 'debug'
+  qtver: '5.12.3'
 
 steps:
 - task: PowerShell@2
   inputs:
     filePath: 'ci/download_qt.ps1'
   env:
-    QT_SOURCE_URL: $(qtSource)
+    QT_SOURCE_URL: '$(qtSource)$(qtver).zip'
 - task: ExtractFiles@1
   inputs:
     archiveFilePatterns: 'qt.zip'
@@ -29,3 +30,6 @@ steps:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: '$(Build.DefinitionName)-$(Build.SourceVersion)'
