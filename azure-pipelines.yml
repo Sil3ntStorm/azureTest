@@ -6,26 +6,75 @@
 trigger:
 - master
 
+strategy:
+  matrix:
+    windows:
+      qtfile: '5.12.3-win.7z'
+      imageName: 'windows-latest'
+    linux:
+      qtfile: '5.12.3-linux.tar.xz'
+      imageName: 'ubuntu-latest'
+    mac:
+      imageName: 'macos-latest'
+
 pool:
-  vmImage: 'windows-latest'
+  vmImage: $(imageName)
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'x64'
-  buildConfiguration: 'debug'
+  buildConfiguration: 'release'
   qtver: '5.12.3'
 
 steps:
 - task: PowerShell@2
+  displayName: 'Install Qt'
+  condition: ne(variables['Agent.OS'], 'Darwin')
   inputs:
     filePath: 'ci/download_qt.ps1'
   env:
-    QT_SOURCE_URL: '$(qtSource)$(qtver).zip'
-- task: ExtractFiles@1
+    QT_SOURCE_URL: '$(qtSource)$(qtfile)'
+- task: Bash@3
+  displayName: 'Install Qt (Mac)'
+  condition: eq(variables['Agent.OS'], 'Darwin')
   inputs:
-    archiveFilePatterns: 'qt.zip'
+    targetType: 'inline'
+    script: |
+      brew install qt
+      ln -s /usr/local/opt/qt Qt
+      echo "##vso[task.setvariable variable=PATH]${PATH}:/usr/local/opt/qt/bin"
+      find /usr/local/Cellar/qt -iname qmake.conf | grep -v ": Permission denied" | grep -v ": Operation not permitted"
+      cat /usr/local/Cellar/qt/5.12.3/mkspecs/macx-clang/qmake.conf
+      cat /usr/local/Cellar/qt/5.12.3/mkspecs/common/macx.conf
+- task: ExtractFiles@1
+  displayName: 'Extract Qt'
+  condition: ne(variables['Agent.OS'], 'Darwin')
+  inputs:
+    archiveFilePatterns: '$(qtfile)'
     destinationFolder: 'Qt'
+- task: Bash@3
+  displayName: 'Build'
+  condition: ne(variables['Agent.OS'], 'Windows_NT')
+  inputs:
+    targetType: 'inline'
+    script: |
+      which clang++
+      which clang++-6
+      which clang
+      which clang-6
+      echo $PATH
+      echo `pwd`
+      echo $QTDIR
+      ls $QTDIR/mkspecs/features
+      #PATH=`pwd`/Qt/bin:$PATH
+      qmake --version
+      qmake $QSPEC AzureTest/nix.pro
+      make
+      pwd
+      ls -alh
+      ls -alh AzureTest
 - task: VSBuild@1
+  condition: eq(variables['Agent.OS'], 'Windows_NT')
   inputs:
     solution: '$(solution)'
     platform: '$(buildPlatform)'
