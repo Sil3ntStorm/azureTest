@@ -1,22 +1,22 @@
 QT += core
-CONFIG += release cxx17 warn_on exceptions
+CONFIG += release warn_on exceptions strict_c++ c++17
 TEMPLATE = app
 TARGET = AzureTest
 DEFINES += QT_NO_UNICODE_LITERAL 
-INCLUDEPATH += ../Qt/5.12.3/include
 
 SOURCES += main.cpp
 
-QMAKE_CXXFLAGS += -std=c++2a -stdlib=libc++
+
+QMAKE_CXXFLAGS += -std=c++2a
+
 macx {
 message("On OSX, set deployment target")
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
-QMAKE_MACX_DEPLOYMENT_TARGET = 10.13
-QMAKE_CXXFLAGS += -mmacosx-version-min=10.13
 }
+
 unix:!macx {
 message("On Linux, override compiler")
-QMAKE_CC = clang
+QMAKE_LINK = clang++
 QMAKE_CXX = clang++
-DEFINES += NDEBUG
+QMAKE_CC = clang
 }
